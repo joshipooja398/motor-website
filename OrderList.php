@@ -6,13 +6,13 @@
 <html>
 <head>
 	<meta charset="UTF-8" /> 
-	<link rel = "shortcut icon" href = "images/spaceshoplogo.png"/>
-	<title>Order List - Spaceshop</title>
+	<link rel = "shortcut icon" href = "images/logo.jpg"/>
+	<title>Order List - MyMotor</title>
 	<link rel="stylesheet" type="text/css" href="shopstyle.css" />
 </head>
 <body>
 	<div id = "header">
-		<img href = "index.php" src='images/spaceshoplogo.png' alt = 'spaceshoplogo'>
+		<img href = "index.php" src='images/logo.jpg' alt = 'MyMotorLogo'>
 		<a style = "text-decoration: none" href = "index.php"><h1>SPACESHOP</h1></a>
 	</div>
 
