@@ -67,6 +67,6 @@ else
 		$statement2->execute();
 		
 		setCookieMessage("Welcome $FirstName!, you can now buy some products!");
-		redirect("Homepage.php");		
+		redirect("index.php");		
 	}
 }
