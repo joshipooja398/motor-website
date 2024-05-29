@@ -17,7 +17,7 @@ $cookieMessage = getCookieMessage();
 <body>
 	<div id = "header">
 		<img href = "index.php" src='images/logo.jpg' alt = 'MyMotorLogo'>
-		<a style = "text-decoration: none" href = "index.php"><h1>SPACESHOP</h1></a>
+		<a style = "text-decoration: none" href = "index.php"><h1>MyMotor</h1></a>
 	</div>
 
 	<div id = "navbar">
