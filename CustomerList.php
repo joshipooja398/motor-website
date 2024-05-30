@@ -1,6 +1,13 @@
-<?php // <--- do NOT put anything before this PHP tag
-	include('functions.php');
-	$cookieMessage = getCookieMessage();
+<?php
+include('functions.php');
+$cookieMessage = getCookieMessage();
+$dbh = connectToDatabase();
+
+// SQL statement to select all customer details
+$query = 'SELECT * FROM Customers';
+
+// Execute the query
+$result = $dbh->query($query);
 ?>
 <!doctype html>
 <html>
@@ -28,137 +35,37 @@
 		</ul>
 	</div>
 
-	<h2>CUSTOMER LIST</h2>
+	<h1 id="heading">CUSTOMER LIST</h1>
 
 	<?php
-		// include some functions from another file.
-		//include('functions.php');
-		//Task 9
-		if(isset($_GET['page']))
-		{
-			$currentPage = intval($_GET['page']);
-		}
-		else
-		{
-			$currentPage = 0;
-		}
+    // Display any cookie messages
+    echo $cookieMessage;
+    ?>
 
-		$print_currentPage = $currentPage + 1;
-		//Task 9C
-		echo "<div id = 'pageBar'>";
-			echo "<ul>";
-				echo "<li>";
-					$previousPage =  $currentPage - 1;
-					if ($previousPage == -1)
-					{
-						echo "<a style = 'text-decoration: none' href = 'CustomerList.php?page=$currentPage'> Previous Page</a>";
+    <table>
+        <tr>
+            <th>Customer ID</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+            <th>City</th>
+        </tr>
 
-					} elseif ($previousPage >= 0)
-					{
-						echo "<a style = 'text-decoration: none' href = 'CustomerList.php?page=$previousPage'> Previous Page</a>";
-					}
-				echo "</li>";
+        <?php
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr>";
+            echo "<td>" . $row['CustomerID'] . "</td>";
+            echo "<td>" . $row['UserName'] . "</td>";
+            echo "<td>" . $row['FirstName'] . "</td>";
+            echo "<td>" . $row['LastName'] . "</td>";
+            echo "<td>" . $row['Address'] . "</td>";
+            echo "<td>" . $row['City'] . "</td>";
+            echo "</tr>";
+        }
+        ?>
 
-				echo "<li>";
-					echo "<form class = 'pageNo'>";
-						echo "<input name = 'page' type = 'text' value = '$print_currentPage' placeholder = 'Go To Page ...'/>";
-					echo "</form>";
-				echo "</li>";
-
-				echo "<li>";
-					$nextPage =  $currentPage + 1; //Task 9A
-					//echo "<a href = 'ProductList.php?page=$nextPage'>Next Page</a>"; //Task 9A
-					echo "<a style = 'text-decoration: none' href = 'CustomerList.php?page=$nextPage'>Next Page</a>"; //Task 9B
-					//echo "<br/>";
-				echo "</li>";
-			echo "</ul>";
-		echo "</div>"; // end of class navbar
-
-
-		// display any error messages. 
-		// TODO style this message so that it is noticeable.
-		echo "<h2>";
-			echo $cookieMessage;
-		echo "</h2>";
-
-		// Table
-		echo "<div class = 'customerListing'>";
-		echo "<table>";
-			echo "<tr>";
-				echo "<th id = 'cust_col1'>";
-					echo "Customer ID";
-				echo "</th>";
-				echo "<th id = 'cust_col2'>";
-					echo "Username";
-				echo "</th>";
-				echo "<th id = 'cust_col3'>";
-					echo "First Name";
-				echo "</th>";
-				echo "<th id = 'cust_col4'>";
-					echo "Last Name";
-				echo "</th>";
-				echo "<th id = 'cust_col5'>";
-					echo "Address";
-				echo "</th>";
-				echo "<th id = 'cust_col6'>";
-					echo "City";
-				echo "</th>";
-			echo "</tr>";
-		echo "</table>";
-
-		// SELF: Fetch data
-		$dbh =  connectToDatabase();
-		
-		//$startRow = $currentPage;
-		// SQL statement
-		$statement = $dbh -> prepare('SELECT *
-			FROM Customers
-			LIMIT 15
-			OFFSET ? * 15
-			;');
-		//$statement -> execute(array('currentPage' => $currentPage));
-		//$results = $statement -> fetchAll();
-
-		$statement->bindValue(1,$currentPage); //Task 9
-
-		// bind the value
-		$statement -> execute();
-
-		// Print out data from Customers table
-		while ($row = $statement -> fetch(PDO::FETCH_ASSOC)) {
-			$customerID = htmlspecialchars($row['CustomerID'], ENT_QUOTES, 'UTF-8');
-			$userName = htmlspecialchars($row['UserName'], ENT_QUOTES, 'UTF-8');
-			$firstName = htmlspecialchars($row['FirstName'], ENT_QUOTES, 'UTF-8');
-			$lastName = htmlspecialchars($row['LastName'], ENT_QUOTES, 'UTF-8');
-			$address = htmlspecialchars($row['Address'], ENT_QUOTES, 'UTF-8');
-			$city = htmlspecialchars($row['City'], ENT_QUOTES, 'UTF-8');
-
-			echo "<table>";
-			echo "<tr>";
-				echo "<td id = 'cust_col1'>";
-					echo "$customerID";
-				echo "</td>";
-				echo "<td id = 'cust_col2'>";
-					echo "$userName";
-				echo "</td>";
-				echo "<td id = 'cust_col3'>";
-					echo "$firstName";
-				echo "</td>";
-				echo "<td id = 'cust_col4'>";
-					echo "$lastName";
-				echo "</td>";
-				echo "<td id = 'cust_col5'>";
-					echo "$address";
-				echo "</td>";
-				echo "<td id = 'cust_col6'>";
-					echo "$city";
-				echo "</td>";
-			echo "</tr>";
-		echo "</table>";
-		}
-		echo "</div>"; // end of customerListing
-		
-	?>
+    </table>
 
 	
 </body>

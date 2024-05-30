@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8" /> 
 	<link rel = "shortcut icon" href = "images/logo.jpg"/>
-	<title>MyMotor.com</title>
+	<title>MyMotor</title>
 	<link rel="stylesheet" type="text/css" href="shopstyle.css" />
 </head>
 <body>
@@ -19,7 +19,7 @@
 	<div id = "navbar">
 		<ul>
 			<li><a style = "text-decoration: none" href = "index.php" >HOME PAGE</a></li>
-			<li><a style = "text-decoration: none" href = "ProductList.php">PRODUCT LIST</a></li>
+			<li><a style = "text-decoration: none" href = "ProductList.php">PRODUCT LIST11</a></li>
 			<li><a style = "text-decoration: none" href = "ViewCart.php">VIEW CART</a></li>
 			<li><a style = "text-decoration: none" href = "CustomerList.php">CUSTOMER LIST</a></li>
 			<li><a style = "text-decoration: none" href = "OrderList.php">ORDER LIST</a></li>
@@ -29,12 +29,12 @@
 	</div>
 
 	<!-- TODO 1: a search box here and a submit button -->
-	<form class = "searchbar" action = "ProductList.php">
+	<!-- <form class = "searchbar" action = "ProductList.php">
 		<input type = "text" placeholder = "Look Up ..." name = "search">
 		<button type = "submit">SEARCH</button>
-	</form>	
+	</form>	 -->
 
-	<marquee id = "topScroll" direction="left" scrolldelay="0">
+	<!-- <marquee id = "topScroll" direction="left" scrolldelay="0">
   		<img src="images/scroll_1.png" />
   		<img src="images/scroll_2.png" />
   		<img src="images/scroll_3.png" />
@@ -43,9 +43,9 @@
   		<img src="images/scroll_2.png" />
   		<img src="images/scroll_3.png" />
 		<img src="images/scroll_4.png" />
-	</marquee>
+	</marquee> -->
 
-		<img id = "home1" src="images/scroll_6.png" />
+		<!-- <img id = "home1" src="images/scroll_6.png" />
 		<div id = "text1">NEW PRODUCTS ARE ABOUT TO BE RELEASED.</div>
 		<br/>
 		<img id = "home2" src="images/scroll_7.png" />
@@ -56,7 +56,7 @@
 		<br/>
 		<img id = "home4" src="images/scroll_9.png" />
 		<div id = "text4">FROM NAM HOANG WITH LOVE!</div>
-		<br/>	
+		<br/>	 -->
 
 	<?php
 		// display any cookie messages. TODO style this message so that it is noticeable.
