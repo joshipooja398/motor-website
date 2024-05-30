@@ -58,6 +58,7 @@ h2 {
 }
 
 #navbar {
+	background: #191919;
 	padding-left: 10%;
 	margin-bottom: 0.5%;
 }
@@ -67,7 +68,7 @@ h2 {
 	margin-right: 0.8%;
 }
 
-#navbar li:nth-child(7) {
+/* #navbar li:nth-child(7) {
 	border-radius: 30px;
 	font-size: 12px;
 	line-height: 2.5em;
@@ -77,24 +78,24 @@ h2 {
 
 #navbar li:nth-child(7):hover {
 	border: 2px solid #595959;
-}
+} */
 
 #navbar a {
 	font-family: "Roboto Condensed", sans-serif;
 	display: inline-block;
 	width: max-content;
 	font-size: 12px;
-	line-height: 2.5em;
+	line-height: 3em;
 	text-align: center;
-	border-radius: 30px;
+	/* border-radius: 30px; */
 	padding-left: 3%;
 	padding-right: 3%;
-	background: #191919;
-	color: #F5F5F4;
+	/* background: #191919; */
+	color: #2E8BC0;
 }
 
 #navbar a:hover {
-	color: #e44b8d;
+	/* color: #e44b8d; */
 	background-color: #e0e0e0;
 }
 
