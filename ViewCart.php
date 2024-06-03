@@ -1,25 +1,24 @@
-<? php // <--- do NOT put anything before this PHP tag
-
+<?php
 include('functions.php');
 
-// get the cookieMessage, this must be done before any HTML is sent to the browser.
+// Get the cookieMessage, this must be done before any HTML is sent to the browser.
 $cookieMessage = getCookieMessage();
-
 ?>
-< !doctype html >
-	<html>
-		<head>
-			<meta charset="UTF-8" />
-			<link rel="shortcut icon" href="images/logo.jpg" />
-			<title>View Cart - MyMotor</title>
-			<link rel="stylesheet" type="text/css" href="shopstyle.css" />
-		</head>
-		<body>
+
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+	<link rel="shortcut icon" href="images/logo.jpg" />
+	<title>View Cart - MyMotor</title>
+	<link rel="stylesheet" type="text/css" href="shopstyle.css" />
+</head>
+<body>
 			<div id="header">
 				<img href="index.php" src='images/logo.jpg' alt='MyMotorLogo'>
 					<a style="text-decoration: none" href="index.php"><h1>MyMotor</h1></a>
 			</div>
-
 			<div id="navbar">
 				<ul>
 					<li><a style="text-decoration: none" href="index.php" >HOME PAGE</a></li>
@@ -32,69 +31,73 @@ $cookieMessage = getCookieMessage();
 				</ul>
 			</div>
 
-			<!-- TODO 1: a search box here and a submit button -->
-
-
 			<div id="heading">VIEW CART</div >
+    
+    <div id="viewcart-container">
+        <?php
+		// Check if the user has items in the shopping cart
+		if (isset($_COOKIE['ShoppingCart']) && $_COOKIE['ShoppingCart'] != '') {
+			// The shopping cart cookie contains a list of productIDs separated by commas
+			// We need to split this string into an array by exploding it.
+			$productID_list = explode(",", $_COOKIE['ShoppingCart']);
 
-			<div class="viewcart-container">
-				<?php
+			// Remove any duplicate items from the cart to prevent primary key violations
+			$productID_list = array_unique($productID_list);
 
-				// does the user have items in the shopping cart?
-				if(isset($_COOKIE['ShoppingCart']) && $_COOKIE['ShoppingCart'] != '')
-				{
-					$productID_list = explode(",", $_COOKIE['ShoppingCart']);
+			$dbh = connectToDatabase();
 
-				$productID_list = array_unique($productID_list);
+			// Create a SQL statement to select the product info for each product in the cart
+			$statement = $dbh->prepare('
+            SELECT ProductID, Name, Description, Price
+            FROM Products
+            WHERE ProductID = ?
+        ');
 
-				$dbh = connectToDatabase();
+			$totalPrice = 0;
 
-		$statement = $dbh->prepare("SELECT ProductID, Name, Description, Price
-				FROM Products
-				WHERE ProductID = ?
-				");
-
-				$totalPrice = 0;
-
-				foreach ($productID_list as $productID) {
-					// Bind the productID and execute the statement
-					$statement -> bindValue(1, $productID);
+			// Loop over the productIDs in the shopping cart
+			foreach ($productID_list as $productID) {
+				// Bind the productID and execute the statement
+				$statement->bindValue(1, $productID);
 				$statement->execute();
 
 				// Check if we found a match
 				if ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 					// Output information about the product, including pictures, description, brand, and more
-					echo '<div class="viewcart-product-box">';
-						echo '<h3>' . $row['Name'] . '</h3>';
+					echo '<div id="viewcart-product-box">';
+					echo '<h3>' . $row['Name'] . '</h3>';
 					echo '<p>' . $row['Description'] . '</p>';
 					echo '<p>Price: $' . $row['Price'] . '</p>';
 					echo '</div>';
 
-				// Add the price of this item to the total
-				$totalPrice += $row['Price'];
+					// Add the price of this item to the total
+					$totalPrice += $row['Price'];
 				}
 			}
-				// Output the total price
-				echo '<p class="viewcart-total-price">Total Price: $' . number_format($totalPrice, 2) . '</p>';
 
-				// If we have any error messages, echo them now
-				echo $cookieMessage;
+			// Output the total price
+			echo '<p id="viewcart-total-price">Total Price: $' . number_format($totalPrice, 2) . '</p>';
+
+			// If we have any error messages, echo them now
+			echo $cookieMessage;
 			?>
-				<form class="viewcart-cart-form" action="ProcessOrder.php" method="POST">
-					<input class="viewcart-form-input" type="text" name="UserName" placeholder="Enter Your UserName" required>
-						<input class="viewcart-confirm-button" type="submit" name="ConfirmOrder" value="Confirm Order">
-						</form>
 
-						<form class="viewcart-cart-form" action="EmptyCart.php" method="POST">
-							<button class="viewcart-empty-button" type="submit" name="EmptyCart">Empty Shopping Cart</button>
-						</form>
-						<?php
+        <form id="viewcart-cart-form" action="ProcessOrder.php" method="POST">
+            <input id="viewcart-form-input" type="text" name="UserName" placeholder="Enter Your UserName" required>
+            <input id="viewcart-confirm-button" type="submit" name="ConfirmOrder" value="Confirm Order">
+        </form>
+
+        <form id="viewcart-cart-form" action="EmptyCart.php" method="POST">
+            <button id="viewcart-empty-button" type="submit" name="EmptyCart">Empty Shopping Cart</button>
+        </form>
+        <?php
 		} else {
-							// If the user has no items in the cart, show a message
-							echo $cookieMessage;
-						echo "You have no items in your cart!";
-	}
+			// If the user has no items in the cart, show a message
+			echo $cookieMessage;
+			echo "You have no items in your cart!";
+		}
 		?>
-					</div>
-				</body>
-			</html>
+    </div>
+</body>
+
+</html>

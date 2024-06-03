@@ -223,10 +223,73 @@ form.pageNo input[type=text] {
 	font-family: "Roboto Condensed", sans-serif;
 }
 
-.productBox p {
-	background: none;
-	font-weight: bold;
-	font-size: 27px;
+#viewcart-container {
+    text-align: center;
+    padding: 20px;
+}
+
+#viewcart-product-box {
+    text-align: left;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+}
+
+#viewcart-cart-form {
+    margin: 10px 0;
+}
+
+#viewcart-form-input {
+    padding: 10px;
+}
+
+#viewcart-total-price {
+    font-weight: bold;
+}
+
+#viewcart-empty-button {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border: none;
+}
+
+#viewcart-confirm-button {
+    margin-top: 10px;
+}
+
+#vieworderdetails-cont {
+    padding: 20px 50px;
+}
+
+#vieworderdetails-header {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#vieworderdetails-text {
+    font-size: 16px;
+}
+
+#vieworderdetails-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#vieworderdetails-table th,
+#vieworderdetails-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#vieworderdetails-table th {
+    background-color: #f2f2f2;
+}
+
+#vieworderdetails-total {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .productBox img {

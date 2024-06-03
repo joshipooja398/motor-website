@@ -1,24 +1,6 @@
-<?php // <--- do NOT put anything before this PHP tag
-
-/*
-
- - This file deals with what happens after the user clicks the 'Confirm Order' button.
-   The system needs to perform a number of steps:
-    1) check they have items in their cart (cookie)
-    2) check the username they entered is valid, we can do this by trying to find them in the customers table
-	3) add a new order to the Orders table.
-	4) add each product in the shopping cart to the OrderProducts table.
-	5) redirect them to the orderDetails page.
-	
-	If the username is not valid, instead of just displaying the message on the page, set a special message cookie.
-	then redirect them back to ViewCart.php and we will handle the message cookie there.
-	
-	This file has three separate SQL statements, don't let that confuse you.
-
-*/
+<?php
 
 include('functions.php');
-
 
 // did the user provide a UserName via POST?
 if(isset($_POST['UserName']))

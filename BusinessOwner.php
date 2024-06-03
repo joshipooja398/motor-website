@@ -28,7 +28,7 @@
 		</ul>
 	</div>
 
-    <h2>BUSINESS OWNER</h2>
+    <div id="heading">BUSINESS OWNER</div>
 
 	<?php
 
@@ -92,14 +92,10 @@
 				echo "<th id = 'pdInfo_col2'>";
 					echo "Product Name";
 				echo "</th>";
-				echo "<th id = 'pdInfo_col3'>";
-					echo "Brand";
 				echo "</th>";
 				echo "<th id = 'pdInfo_col4'>";
 					echo "Price";
 				echo "</th>";
-				echo "<th id = 'pdInfo_col5'>";
-					echo "Popularity";
 				echo "</th>";
 				echo "<th id = 'pdInfo_col6'>";
 					echo "Total Quantity";
@@ -118,12 +114,12 @@
 		
 		//$startRow = $currentPage;
 		// SQL statement
-		$statement = $dbh -> prepare("SELECT P.ProductID, P.Description, B.BrandName, P.Price,
-					   COUNT(OP.ProductID) AS Popularity, SUM(OP.Quantity) AS TotalQuantity, 
+		$statement = $dbh -> prepare("SELECT P.ProductID, P.Description, P.Price,
+					   SUM(OP.Quantity) AS TotalQuantity, 
 					   (SUM(OP.Quantity)  * P.Price) AS TotalRevenue
-			FROM Products P, Brands B, OrderProducts OP
-			WHERE P.BrandID = B.BrandID AND P.ProductID = OP.ProductID
-			GROUP BY P.ProductID, B.BrandName, P.Description, P.Price
+			FROM Products P, OrderProducts OP
+			WHERE P.ProductID = OP.ProductID
+			GROUP BY P.ProductID, P.Description, P.Price
 			ORDER BY(SUM(OP.Quantity)  * P.Price) DESC
 			LIMIT 15
 			OFFSET ? * 15
@@ -140,10 +136,8 @@
 		while ($row = $statement -> fetch(PDO::FETCH_ASSOC)) {
 			$ProductID = htmlspecialchars($row['ProductID'], ENT_QUOTES, 'UTF-8');
 			$Description = htmlspecialchars($row['Description'], ENT_QUOTES, 'UTF-8');
-			$BrandName = htmlspecialchars($row['BrandName'], ENT_QUOTES, 'UTF-8');
 			$Price = htmlspecialchars($row['Price'], ENT_QUOTES, 'UTF-8');
 			$Price = number_format($Price, 2);
-			$Popularity = htmlspecialchars($row['Popularity'], ENT_QUOTES, 'UTF-8');
 			$TotalQuantity = htmlspecialchars($row['TotalQuantity'], ENT_QUOTES, 'UTF-8');
 			$TotalRevenue = htmlspecialchars($row['TotalRevenue'], ENT_QUOTES, 'UTF-8');
 			$TotalRevenue = number_format($TotalRevenue, 2);
@@ -159,14 +153,12 @@
 				echo "<td id = 'pdInfo_col2'>";
 					echo "<p>$Description</p>";
 				echo "</td>";
-				echo "<td id = 'pdInfo_col3'>";
-					echo "$BrandName";
+				
 				echo "</td>";
 				echo "<td id = 'pdInfo_col4'>";
 					echo "$$Price";
 				echo "</td>";
-				echo "<td id = 'pdInfo_col5'>";
-					echo "$Popularity";
+				
 				echo "</td>";
 				echo "<td id = 'pdInfo_col6'>";
 					echo "$TotalQuantity";
