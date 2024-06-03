@@ -1,6 +1,13 @@
-<?php 
-	echo "My First PHP Script!";
-	echo "<br />";
+<?php
+include('functions.php');
+$cookieMessage = getCookieMessage();
+$dbh = connectToDatabase();
+
+// SQL statement to select all customer details
+$query = 'SELECT * FROM Products';
+
+// Execute the query
+$result = $dbh->query($query);
 ?>
 
 <!doctype html>
@@ -28,6 +35,30 @@
             <li><a style = "text-decoration: none" href = "Admin.php">ADMIN</a></li>
 		</ul>
 	</div>
+
+	 <div class="product-container">
+        <?php
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+
+			$imagePath = $row['Image'];
+			$productID = $row['ProductID'];
+    		$productName = htmlspecialchars($row['Name']);
+    		$productDescription = htmlspecialchars($row['Description']);
+    		$productPrice = number_format($row['Price'], 2);
+			
+			echo '<div class="productBox">';
+    		echo "<a href='ViewProduct.php?ProductID={$productID}'>";
+			echo "<img src='{$imagePath}' alt='Product Image' />";
+    		echo '</a>';
+    		echo "<a href='ViewProduct.php?ProductID={$productID}'>";
+    		echo "<h3>{$productName}</h3>";
+    		echo "<p>{$productDescription}</p>";
+    		echo "<p>Price: \${$productPrice}</p>";
+    		echo '</a>';
+    		echo "</div> \n";
+        }
+        ?>
+    </div>
 
 </body>	
 </html>

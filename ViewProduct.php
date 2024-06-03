@@ -24,13 +24,7 @@
 		</ul>
 	</div>
 
-	<!-- TODO 1: a search box here and a submit button -->
-	<form class = "searchbar" action = "ProductList.php">
-		<input type = "text" placeholder = "Look Up ..." name = "search">
-		<button type = "submit">SEARCH</button>
-	</form>	
-
-	<h2>VIEW PRODUCT DETAILS</h2>
+	<div id="heading">VIEW PRODUCT DETAILS</div id="heading">
 
 	<?php 
 		
@@ -45,8 +39,7 @@
 			$dbh = connectToDatabase(); 
 			
 			//  bind the value here
-			$statement = $dbh->prepare('SELECT * FROM Products INNER JOIN Brands
-			ON Brands.BrandID = Products.BrandID
+			$statement = $dbh->prepare('SELECT * FROM Products 
 			WHERE Products.ProductID = ? '); //Task 10  LIMIT 10 ; //OFFSET ? * 10 
 			
 			$statement -> bindValue(1,$productIDURL);  // Task 10
@@ -55,50 +48,32 @@
 			$statement -> execute();
 
 			// Stament for brand details
-			$statement_brand = $dbh -> prepare('SELECT *
-				FROM Brands
-				INNER JOIN Products
-				ON Brands.BrandID = Products.BrandID
-				WHERE Products.ProductID = ? 
-			');
-			$statement_brand -> bindValue(1, $productIDURL);
-			$statement_brand -> execute();
 
 			// get the result, there will only ever be one product with a given ID (because products ids must be unique)
 			// so we can just use an if() rather than a while()
 			if($row = $statement->fetch(PDO::FETCH_ASSOC))
 			{
-				// Brands table: BrandWebsite
-				if($row = $statement_brand -> fetch(PDO::FETCH_ASSOC))
-				{
-					$BrandWebsite = htmlspecialchars($row['Website'], ENT_QUOTES, 'UTF-8');
-				}
-	
 				// Products table: Price, Description, BrandName, BrandID
 				$Price = htmlspecialchars($row['Price'], ENT_QUOTES, 'UTF-8'); 
 				$Price = number_format($Price, 2);
 				$Description = htmlspecialchars($row['Description'], ENT_QUOTES, 'UTF-8'); 
-				$BrandName = htmlspecialchars($row['BrandName'], ENT_QUOTES, 'UTF-8'); 
-				$BrandID = htmlspecialchars($row['BrandID'], ENT_QUOTES, 'UTF-8'); 
+				
 
 				echo "<div class = 'productView'>";
 					echo "<div class = 'productView_picture'>";
-						echo "<a href = '../IFU_Assets/ProductPictures/$productIDURL.jpg' target = '_blank'><img src = '../IFU_Assets/ProductPictures/$productIDURL.jpg' alt= 'productID'/></a>";
+						// echo "<a href = '$row['Image']' target = '_blank'><img src ='$row['Image']' alt= 'productID'/></a>";
 					echo "</div>";
 
 					echo "<div class = 'productView_product'>";
 						echo "<p>$Description<br/></p>";
 						echo "Price: <p>$$Price</p><br/>";
 						echo "\n";
-						echo "Manufacturer: <p>$BrandName<br/></p>";
-						echo "<a href = '$BrandWebsite' target = '_blank'><img src = '../IFU_Assets/BrandPictures/$BrandID.jpg' alt='BrandID'/></a>";
+						
 					echo "</div>";
 
 					// change from GET to POST later
 					echo "<form class = 'productView_addCart' method = 'POST' action = 'AddToCart.php?ProductID=$productIDURL'>";
-						echo "<p>BUY NEW</p>";
-						echo "<p>BUY REFURBISHED</p>";
-						echo "<p>BUY USED</p>";
+					
 
 						if((!isset($_COOKIE['ShoppingCart'])) || (stringContains($_COOKIE['ShoppingCart'], $productIDURL) == false)) {
 							echo "<button name = 'BuyButton' type = 'submit'>ADD TO CART</button>";	
@@ -111,24 +86,19 @@
 
 				echo "<div class = 'description'>";
 					echo "<p>";
-					echo "This is the description for $Description from $BrandName. It is a very excellent product: You can either buy new, refurbished or used. ";
-					echo "Everybody loves $BrandName's products, and the new $Description from $BrandName is not going to disappoint you. ";
+					
 					echo "At $$Price, $Description is such a bargain and you have the option to buy new, refurbished or used. ";
-					echo "You must have $Description from $BrandName. It is a extraordinary! </br>";
+					echo "You must have $Description from. It is a extraordinary! </br>";
 					echo "</p>";
 					echo "<p>";
-					echo "Everybody loves $BrandName's products, and the new $Description from $BrandName is not going to disappoint you. ";
-					echo "You must have $Description from $BrandName. It is a extraordinary! ";
+					echo "You must have $Description from . It is a extraordinary! ";
 					echo "At $$Price, $Description is such a bargain and you have the option to buy new, refurbished or used. ";
-					echo "This is the description for $Description from $BrandName. It is a very excellent product: You can either buy new, refurbished or used. ";
+					echo "This is the description for $Description from . It is a very excellent product: You can either buy new, refurbished or used. ";
 					echo "</p>";
 					echo "<p>";
 					echo "At $$Price, $Description is such a bargain and you have the option to buy new, refurbished or used. ";
-					echo "This is the description for $Description from $BrandName. It is a very excellent product: You can either buy new, refurbished or used. ";
-					echo "Everybody loves $BrandName's products, and the new $Description from $BrandName is not going to disappoint you. ";
-					echo "You must have $Description from $BrandName. It is a extraordinary! ";
+					echo "You must have $Description from . It is a extraordinary! ";
 					echo "At $$Price, $Description is such a bargain and you have the option to buy new, refurbished or used. ";
-					echo "This is the description for $Description from $BrandName. It is a very excellent product: You can either buy new, refurbished or used. ";
 					echo "</p>";
 				echo "</div>";
 			}
