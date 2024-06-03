@@ -61,7 +61,7 @@
 
 				echo "<div class = 'productView'>";
 					echo "<div class = 'productView_picture'>";
-						// echo "<a href = '$row['Image']' target = '_blank'><img src ='$row['Image']' alt= 'productID'/></a>";
+						echo "<a href = '../IFU_Assets/ProductPictures/$productIDURL.jpg' target = '_blank'><img src = './images/$productIDURL.jpg' alt= 'productID'/></a>";
 					echo "</div>";
 
 					echo "<div class = 'productView_product'>";
