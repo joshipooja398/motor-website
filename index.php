@@ -18,7 +18,7 @@
 
 	<div id = "navbar">
 		<ul>
-			<li><a style = "text-decoration: none" href = "index.php" >HOME PAGE</a></li>
+			<li><a style = "text-decoration: none" href = "index.php" >HOME PAGE1</a></li>
 			<li><a style = "text-decoration: none" href = "ProductList.php">PRODUCT LIST</a></li>
 			<li><a style = "text-decoration: none" href = "ViewCart.php">VIEW CART</a></li>
 			<li><a style = "text-decoration: none" href = "CustomerList.php">CUSTOMER LIST</a></li>
