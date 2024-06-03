@@ -28,7 +28,7 @@
 		</ul>
 	</div>
 
-    <div id="heading">BUSINESS OWNER</div>
+    <h1 id="heading">BUSINESS OWNER</h1>
 
 	<?php
 

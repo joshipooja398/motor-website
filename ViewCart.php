@@ -31,7 +31,7 @@ $cookieMessage = getCookieMessage();
 				</ul>
 			</div>
 
-			<div id="heading">VIEW CART</div >
+			<h1 id="heading">VIEW CART</h1 >
     
     <div id="viewcart-container">
         <?php

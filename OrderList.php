@@ -28,7 +28,7 @@
 		</ul>
 	</div>
 
-	<div id="heading">ORDER LIST</div>
+	<h1 id="heading">ORDER LIST</h1>
 <?php
     $dbh = connectToDatabase();
 

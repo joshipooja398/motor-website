@@ -24,7 +24,7 @@
 		</ul>
 	</div>
 
-	<div id="heading">VIEW PRODUCT DETAILS</div id="heading">
+	<h1 id="heading">VIEW PRODUCT DETAILS</h1 id="heading">
 
 	<?php 
 		

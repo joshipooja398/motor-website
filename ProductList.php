@@ -3,11 +3,68 @@ include('functions.php');
 $cookieMessage = getCookieMessage();
 $dbh = connectToDatabase();
 
-// SQL statement to select all customer details
-$query = 'SELECT * FROM Products';
+// Define the number of products to display per page
+$itemsPerPage = 10;
 
-// Execute the query
-$result = $dbh->query($query);
+// Determine the current page
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Define the default sort option
+$sortOption = 'popularity';
+
+// Check if a search term is provided
+$searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+// Define the SQL statement to select products ordered by popularity with optional search
+$query = 'SELECT * FROM Products';
+$searchConditions = [];
+
+if (!empty($searchTerm)) {
+    $query .= ' WHERE Name LIKE :searchTerm';
+    $searchConditions[':searchTerm'] = '%' . $searchTerm . '%';
+}
+
+$query .= ' ORDER BY ';
+
+switch ($sortOption) {
+    case 'name':
+        $query .= 'Name ASC';
+        break;
+    case 'name_desc':
+        $query .= 'Name DESC';
+        break;
+    case 'price':
+        $query .= 'Price ASC';
+        break;
+    case 'price_desc':
+        $query .= 'Price DESC';
+        break;
+    case 'popularity':
+    default:
+        $query .= 'Popularity DESC';
+        break;
+}
+
+$query .= ' LIMIT :offset, :limit';
+
+// Calculate the offset for pagination
+$offset = ($page - 1) * $itemsPerPage;
+
+// Prepare the SQL statement
+$statement = $dbh->prepare($query);
+$statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+$statement->bindValue(':limit', $itemsPerPage, PDO::PARAM_INT);
+
+// Bind the search condition if applicable
+if (!empty($searchTerm)) {
+    $statement->bindValue(':searchTerm', $searchConditions[':searchTerm'], PDO::PARAM_STR);
+}
+
+$statement->execute();
+
+// Get the total number of products for pagination
+$totalProducts = $dbh->query('SELECT COUNT(*) FROM Products')->fetchColumn();
+$totalPages = ceil($totalProducts / $itemsPerPage);
 ?>
 
 <!doctype html>
@@ -36,28 +93,62 @@ $result = $dbh->query($query);
 		</ul>
 	</div>
 
-	 <div class="product-container">
-        <?php
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+	 <h1 id="heading">Product List</h1>
+    <?php
+    // Display any cookie messages
+    echo $cookieMessage;
+    ?>
 
-			$imagePath = $row['Image'];
-			$productID = $row['ProductID'];
-    		$productName = htmlspecialchars($row['Name']);
-    		$productDescription = htmlspecialchars($row['Description']);
-    		$productPrice = number_format($row['Price'], 2);
-			
-			echo '<div class="productBox">';
-    		echo "<a href='ViewProduct.php?ProductID={$productID}'>";
-			echo "<img src='{$imagePath}' alt='Product Image' />";
-    		echo '</a>';
-    		echo "<a href='ViewProduct.php?ProductID={$productID}'>";
-    		echo "<h3>{$productName}</h3>";
-    		echo "<p>{$productDescription}</p>";
-    		echo "<p>Price: \${$productPrice}</p>";
-    		echo '</a>';
-    		echo "</div> \n";
+    <!-- Search and Sort Form -->
+    <form method="get" id="search-sort-container">
+        <div>
+            <label for="search">Search:</label>
+            <input type="text" id="search" name="search" value="<?php echo $searchTerm; ?>">
+            <button type="submit">Search</button>
+        </div>
+        <div>
+            <label for="sort">Sort by:</label>
+            <select id="sort" name="sort">
+                <option value="popularity" <?php echo ($sortOption === 'popularity') ? 'selected' : ''; ?>>Popularity
+                </option>
+                <option value="name" <?php echo ($sortOption === 'name') ? 'selected' : ''; ?>>Name A to Z</option>
+                <option value="name_desc" <?php echo ($sortOption === 'name_desc') ? 'selected' : ''; ?>>Name Z to A
+                </option>
+                <option value="price" <?php echo ($sortOption === 'price') ? 'selected' : ''; ?>>Price Low to High
+                </option>
+                <option value="price_desc" <?php echo ($sortOption === 'price_desc') ? 'selected' : ''; ?>>Price High to
+                    Low</option>
+            </select>
+            <input type="submit" value="Sort">
+        </div>
+    </form>
+
+
+    <div id="product-container">
+        <?php
+        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+            echo '<div id="product-box">';
+            echo '<a href="ViewProduct.php?ProductID=' . $row['ProductID'] . '">';
+            echo '<h3>' . $row['Name'] . '</h3>';
+            echo '<p>' . $row['Description'] . '</p>';
+            echo '<p>Price: $' . $row['Price'] . '</p>';
+            echo '</a>';
+            echo '</div>';
         }
         ?>
+    </div>
+
+    <!-- Pagination links -->
+    <div id="pagination">
+        <?php if ($page > 1): ?>
+        <a
+            href="ProductList.php?page=<?php echo $page - 1; ?>&sort=<?php echo $sortOption; ?>&search=<?php echo $searchTerm; ?>">Previous</a>
+        <?php endif; ?>
+        <?php if ($page < $totalPages): ?>
+        <a
+            href="ProductList.php?page=<?php echo $page + 1; ?>&sort=<?php echo $sortOption; ?>&search=<?php echo $searchTerm; ?>">Next</a>
+        <?php endif; ?>
+    </div>
     </div>
 
 </body>	

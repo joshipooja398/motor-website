@@ -24,7 +24,7 @@
 		</ul>
 	</div>
 
-	<div id="heading">MY ORDERS</div>
+	<h1 id="heading">MY ORDERS</h1>
 
 <div id='vieworderdetails-cont'>
         <?php
