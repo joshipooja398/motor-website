@@ -104,30 +104,15 @@ $totalPages = ceil($totalProducts / $itemsPerPage);
         <div>
             <label for="search">Search:</label>
             <input type="text" id="search" name="search" value="<?php echo $searchTerm; ?>">
-            <button type="submit">Search</button>
-        </div>
-        <div>
-            <label for="sort">Sort by:</label>
-            <select id="sort" name="sort">
-                <option value="popularity" <?php echo ($sortOption === 'popularity') ? 'selected' : ''; ?>>Popularity
-                </option>
-                <option value="name" <?php echo ($sortOption === 'name') ? 'selected' : ''; ?>>Name A to Z</option>
-                <option value="name_desc" <?php echo ($sortOption === 'name_desc') ? 'selected' : ''; ?>>Name Z to A
-                </option>
-                <option value="price" <?php echo ($sortOption === 'price') ? 'selected' : ''; ?>>Price Low to High
-                </option>
-                <option value="price_desc" <?php echo ($sortOption === 'price_desc') ? 'selected' : ''; ?>>Price High to
-                    Low</option>
-            </select>
-            <input type="submit" value="Sort">
+            <button type="submit" id="search-button">Search</button>
         </div>
     </form>
 
 
-    <div id="product-container">
+    <div class="product-container">
         <?php
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-            echo '<div id="product-box">';
+            echo '<div class="product-box">';
             echo '<a href="ViewProduct.php?ProductID=' . $row['ProductID'] . '">';
             echo '<h3>' . $row['Name'] . '</h3>';
             echo '<p>' . $row['Description'] . '</p>';

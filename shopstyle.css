@@ -26,14 +26,42 @@
 }
 
 #heading {
+	margin: 2% 0;
 	text-align: center;
 	color: #2E8BC0;
 }
 
 #search-sort-container {
+	margin: 25px 0px 25px 0px;
     display: flex;
     justify-content: space-around;
     max-width: 100%;
+	font-size: x-large;
+}
+#search{
+	width: 300px; 
+    padding: 10px; 
+    margin: 5px 0; 
+    box-sizing: border-box; 
+    border: 2px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 16px; 
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#search-button{
+	background-color: #2E8BC0;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s;
 }
 
 #search-container {
@@ -44,14 +72,15 @@
     width: 90%;
 }
 
-#product-container {
+.product-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
 }
 
-#product-box {
+.product-box {
+	border: 1px solid red;
     background-color: #fff;
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -162,6 +191,11 @@ form {
 
 #searchbar {
 	float: right;
+}
+
+#error-message {
+    color: #ff0000;
+    margin-bottom: 10px;
 }
 
 form.searchbar input[type=text] {
@@ -307,20 +341,44 @@ form.pageNo input[type=text] {
 
 #viewcart-form-input {
     padding: 10px;
+	width: 300px;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 #viewcart-total-price {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 #viewcart-empty-button {
-    background-color: red;
-    color: white;
-    padding: 10px;
+    background-color: #2E8BC0;
     border: none;
+    color: whitesmoke;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s;
 }
 
 #viewcart-confirm-button {
+	width: 300px;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box; 
+    border: 2px solid #ccc; 
+    border-radius: 4px;
+    font-size: 16px; 
+    transition: border-color 0.3s, box-shadow 0.3s; 
     margin-top: 10px;
 }
 
@@ -384,7 +442,7 @@ form.pageNo input[type=text] {
 	margin-left: auto;*/
 	border: none;
 	border-radius: 0% 10% 10% 0%;
-	padding: 1%;
+	padding: 2%;
 	overflow: auto;
 	display: flex;
 	flex-direction: row;
@@ -427,8 +485,8 @@ form.pageNo input[type=text] {
 	padding: 2%;
 	margin-right: 10px;
 	font-size: 15px;
-	background-color: #c4aedf;
-	color: #2d1050;
+	background-color: #B2BEB5;
+
 }
 
 .productView_product p {
@@ -457,15 +515,22 @@ form.pageNo input[type=text] {
 	text-align: center;
 	margin-right: 15%;
 	width: 20%;
+	margin-top: 5%;
 }
 
 .productView_addCart button {
 	font-family: "Roboto Condensed", sans-serif;
-	border: none;
-	width: 100%;
-	padding: 13px 55px 13px 55px;
-	border-radius: 55px;
-	background-color: #8f60c8;
+	background-color: #2E8BC0; /* Green background */
+    border: none; /* Remove borders */
+    color: whitesmoke; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button appear inline */
+    font-size: 16px; /* Increase font size */
+    cursor: pointer; /* Pointer/hand icon on hover */
+    border-radius: 12px; /* Rounded corners */
+    transition: background-color 0.3s;
 }
 
 .productView_addCart button:hover {
@@ -687,9 +752,10 @@ form.cartTotal button:hover {
 	border: none;
 	padding: 5%;
 	display: column;
-	background-color: #191919;
+	background-color: #ccc;
 	border-radius: 25px;
-	color: #F5F5F4;
+	color: #333;
+	border-radius: 10px;
 }
 
 #signUpElement {
@@ -705,6 +771,7 @@ form.cartTotal button:hover {
 }
 
 #signUpElement label {
+	margin-top: 15px;
 	text-align: left;
 	background: none;
 	border: none;
@@ -716,23 +783,25 @@ input[type=password] {
 	font-family: "Roboto Condensed", sans-serif;
 	margin-left: auto;
 	margin-right: auto;
-	background: #8f60c8;
+	background: #fff;
 	text-align: left;
 	border: none;
 	width: 300px;
-	border-radius: 15px;
+	height: 40px;
+	border-radius: 8px;
 	padding: 5px 10px 5px 10px;
 }
 
 #signUpElement input[type=text]:hover,
 input[type=password]:hover {
-	border: 2px solid #8f60c8;
-	background: #c4aedf;
+	border: 2px solid black;
+	background: rgb(219, 193, 193);
 }
 
 #signUpElement button {
 	font-family: "Roboto Condensed", sans-serif;
-	width: 200px;
+	width: 300px;
+	height: 40px;
 	border: none;
 	padding: 10px;
 	overflow: auto;
@@ -740,13 +809,14 @@ input[type=password]:hover {
 	margin-bottom: 10px;
 	margin-left: auto;
 	margin-right: auto;
-	border-radius: 30px;
-	background: #595959;
+	border-radius: 8px;
+	color: whitesmoke;
+	background: #2E8BC0;
 }
 
 #signUpElement button:hover {
-	color: #2d1050;
-	background: #e22376;
+	color: whitesmoke;
+	background: #2E8BC0;
 	width: 300px;
 }
 
@@ -836,7 +906,7 @@ table {
 	border-collapse: collapse;
 	width: 100%;
 	max-width: 800px;
-	margin: 20px auto;
+	padding: 20px auto;
 }
 
 table,
@@ -1004,10 +1074,8 @@ td img {
 	padding: 40px 20px 30px 20px;
 	text-align: justify;
 	text-align: center;
-	border: 4px solid #6b35ad;
 	border-radius: 35px;
-	background: #191919;
-	color: #F5F5F4;
+	color: black;
 	font-size: small;
 }
 

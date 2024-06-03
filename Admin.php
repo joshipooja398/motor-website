@@ -28,7 +28,7 @@
 		</ul>
 	</div>
 
-    <h2>ADMIN VERIFICATION</h2>
+    <h1 id="heading">ADMIN VERIFICATION</h1>
 
 	<?php
     echo "<div id = 'error'>$cookieMessage</div>";

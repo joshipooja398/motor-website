@@ -28,7 +28,7 @@
 		</ul>
 	</div>
 
-	<h2>SIGN UP</h2>
+	<h1 id="heading">SIGN UP</h1>
 
 	<?php
 		// display any error messages. TODO style this message so that it is noticeable.
@@ -36,15 +36,7 @@
 	?>
 	
 	<form class = "signup" method = 'POST' action = 'AddNewCustomer.php'>
-		<!-- 
-			TODO make a sign up <form>, don't forget to use <label> tags, <fieldset> tags and placeholder text. 
-			all inputs are required.
-
-			Make sure you <input> tag names match the names in AddNewCustomer.php
-			
-			your form tag should use the POST method. don't forget to specify the action attribute.
-		-->
-		<div id = 'signUpElement'> <!-- Username -->
+		<div id = 'signUpElement'> 
 			<label for = 'UserName'>Username</label>
 		</div> 
 		<div id = 'signUpElement'> 
