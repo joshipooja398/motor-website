@@ -29,6 +29,7 @@
 	</div>
 
 	<h1 id="heading">ORDER LIST</h1>
+    <center>
 <?php
     $dbh = connectToDatabase();
 
@@ -66,6 +67,7 @@
         echo 'No orders found.';
     }
     ?>
+    </center>
 	
 </body>
 </html>

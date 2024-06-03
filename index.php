@@ -28,57 +28,59 @@
 		</ul>
 	</div>
 
-	<!-- TODO 1: a search box here and a submit button -->
-	<!-- <form class = "searchbar" action = "ProductList.php">
-		<input type = "text" placeholder = "Look Up ..." name = "search">
-		<button type = "submit">SEARCH</button>
-	</form>	 -->
+	<h1 id="heading">Welcome To My Motor Store</h1>
 
-	<!-- <marquee id = "topScroll" direction="left" scrolldelay="0">
-  		<img src="images/scroll_1.png" />
-  		<img src="images/scroll_2.png" />
-  		<img src="images/scroll_3.png" />
-		<img src="images/scroll_4.png" />
-		<img src="images/scroll_1.png" />
-  		<img src="images/scroll_2.png" />
-  		<img src="images/scroll_3.png" />
-		<img src="images/scroll_4.png" />
-	</marquee> -->
+<?php
+    // Display any cookie messages. TODO style this message so that it is noticeable.
+    echo $cookieMessage;
+    ?>
 
-		<!-- <img id = "home1" src="images/scroll_6.png" />
-		<div id = "text1">NEW PRODUCTS ARE ABOUT TO BE RELEASED.</div>
-		<br/>
-		<img id = "home2" src="images/scroll_7.png" />
-		<div id = "text2">ARE YOU EXCITED?</div>
-		<br/>
-		<img id = "home3" src="images/scroll_8.png" />
-		<div id = "text3">WE HAVE A LOT OF DISCOUNTS.</div>
-		<br/>
-		<img id = "home4" src="images/scroll_9.png" />
-		<div id = "text4">FROM NAM HOANG WITH LOVE!</div>
-		<br/>	 -->
+	<div class="search-box">
+	<center>
+        <form action="ProductList.php" method="get">
+            <input type="text" id="search" name="search" placeholder="Search products">
+            <input type="submit" value="Search" class="index-button">
+        </form>
+		</center
+    </div>
 
-	<?php
-		// display any cookie messages. TODO style this message so that it is noticeable.
-		echo "<div id = 'error'>$cookieMessage</div>";
+	<h3 class='p-20'><center>Recently Purchased Motor</h3>
 
-	?>
-	
-		<!-- 
-		
-			// TODO put a search box here and a submit button.
-			
-			// TODO the rest of this page is your choice, but you must not leave it blank.
-			
-			Possible ideas:
-			•	List the 10 most recently purchased products.
-			•	Use a CSS Animated Slider.
-			•	Display any sales or promotions (using an image)
+	<div class="slider-container">
+        <div class="slider-wrapper">
 
-		-->
+        
+            <?php
+            $dbh = connectToDatabase();
 
-	<!-- TODO 2: Make the page presentable with content -->
-	<!-- TODO 2.1: Slideshow for best selling products-->
+            $statement = $dbh->prepare('
+                SELECT Orders.OrderID, Orders.TimeStamp, OrderProducts.ProductID, Products.Description
+                FROM Orders
+                INNER JOIN OrderProducts ON OrderProducts.OrderID = Orders.OrderID
+                INNER JOIN Products ON Products.ProductID = OrderProducts.ProductID
+                ORDER BY Orders.TimeStamp DESC
+                LIMIT 10;
+            ');
+
+            $statement->execute();
+
+            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                $orderID = makeOutputSafe($row['OrderID']);
+                $timestamp = makeOutputSafe($row['TimeStamp']);
+                $productID = makeOutputSafe($row['ProductID']);
+                $description = makeOutputSafe($row['Description']);
+
+                // Display this information as a slider item
+                echo '<div class="slider-item">';
+                echo "<p>OrderID: $orderID</p>";
+                echo "<p>Time: $timestamp</p>";
+                echo "<p>ProductID: $productID</p>";
+                echo "<p>Description: $description</p>";
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
 	
 </body>
 </html>

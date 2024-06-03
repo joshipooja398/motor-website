@@ -41,7 +41,7 @@ $result = $dbh->query($query);
     // Display any cookie messages
     echo $cookieMessage;
     ?>
-
+    <center>
     <table>
         <tr>
             <th>Customer ID</th>
@@ -66,7 +66,7 @@ $result = $dbh->query($query);
         ?>
 
     </table>
-
+    </center>
 	
 </body>
 </html>
